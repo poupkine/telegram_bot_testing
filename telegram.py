@@ -14,8 +14,8 @@ from bs4 import BeautifulSoup
 # 	proxies_list.append(proxies)
 
 
-#token = 'AAG3V-oUt_KvvoKvn56yIAu2AmHn-qzYFy0'
-token = '680359542:AAG3V-oUt_KvvoKvn56yIAu2AmHn-qzYFy0'
+
+token = '680359542:AAG3V-oUt_KvvoKv1n56yIAu2AmHn-qzYFy0'
 
 URL = 'https://api.telegram.org/bot' + token + '/'
 
@@ -35,23 +35,27 @@ def get_updates():
 
 def get_message():
 	data = get_updates()
-	chat_id = data['result'][-1]['message']#['chat']['id']
-	message_text = data['result'][-1]['message']#['chat']['text']
+	chat_id = data['result'][-1]['message']['chat']['id']
+	message_text = data['result'][-1]['message']['text']
 	message = { 
 				'chat_id': chat_id,
 				'text': message_text
 	}
-	print('chat_id:', chat_id)
-	print('message_text:', message_text)
+
 	return message
 
 def send_message(chat_id, text = 'wait a second please...'):
 	url = URL + 'sendmessage?chat_id={}&text={}'.format(chat_id, text)
+	requests.get(url)
 
 
 def main():
 	send_message(13)
-	get_message()
+	print(get_message())
+	answer = get_message()
+	chat_id = answer['chat_id']
+#	text = 
+	send_message(chat_id, "ask!!")
 
 if __name__ == '__main__':
 	main()
