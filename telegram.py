@@ -13,28 +13,28 @@ from bs4 import BeautifulSoup
 # 	}
 # 	proxies_list.append(proxies)
 
-
-
-token = '680359542:AAG3V-oUt_KvvoKv1n56yIAu2AmHn-qzYFy0'
+token = '680359542:AAG31V-oUt_KvvoKvn56yIAu2AmHn-qzYFy0'
 
 URL = 'https://api.telegram.org/bot' + token + '/'
 
 proxies = {
 	
    
-	'https': 'https://27.147.136.178:47678',
-	'http': 'http://183.88.17.55:8080'
+	'https': 'https://128.0.179.234:41258',
+	'http': 'http://138.204.23.66.64:53281'
 	
 }
 
 def get_updates():
-	url = URL + 'getupdates'
+	url = URL + 'getUpdates'
 	r = requests.get(url, proxies=proxies)
-	print('result:', r)
+	print('result: ', r)
 	return r.json()
 
 def get_message():
 	data = get_updates()
+	print(data['result'][-1])
+
 	chat_id = data['result'][-1]['message']['chat']['id']
 	message_text = data['result'][-1]['message']['text']
 	message = { 
@@ -45,19 +45,20 @@ def get_message():
 	return message
 
 def send_message(chat_id, text = 'wait a second please...'):
-	url = URL + 'sendmessage?chat_id={}&text={}'.format(chat_id, text)
+	url = URL + 'sendMessage?chat_id={}&text={}'.format(chat_id, text)
+	print('sending: ', url)
 	requests.get(url)
 
 
 def main():
-	send_message(13)
-	print(get_message())
-	answer = get_message()
-	chat_id = answer['chat_id']
-#	text = 
-	send_message(chat_id, "ask!!")
+	while True:
+	#	print(get_message())
+		answer = get_message()
+		chat_id = answer['chat_id']
+	#	text = 
+		send_message(chat_id, answer['text'] )
+		print('next step')
+		sleep(1)
 
 if __name__ == '__main__':
 	main()
-
-
