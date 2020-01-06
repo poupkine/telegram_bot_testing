@@ -30,8 +30,7 @@ for items in soup.select("#proxylisttable tbody tr")[50:random.randint(51,75)]:
 	'https': temp
 	}
 
-#token = 'AAG3V-oUt_KvvoKvn56yIAu2AmHn-qzYFy0'
-token = '680359542:AAG3V-oUt_KvvoKvn56yIAu2AmHn-qzYFy0'
+token = '680359542:AAG3V-oUt_KvvoKvn516yIAu2AmHn-qzYFy0'
 
 URL = 'https://api.telegram.org/bot' + token + '/'
 
@@ -74,7 +73,8 @@ def main():
 		answer = get_message()
 		chat_id = answer['chat_id']
 		text = answer['text']
-		send_message(chat_id, answer['text']+"?" )
+		answer_choise = ['чо?', 'и чо?', answer['text']+"?"]
+		send_message(chat_id, answer_choise[random.randint(0,3)] )
 		if "понял" in text:
 			send_message(chat_id, "молодец" )
 
@@ -82,4 +82,11 @@ def main():
 		time.sleep(1)
 
 if __name__ == '__main__':
-	main()
+	while True:
+		i = 0
+		try:
+			main()
+		except:
+			print("exception", i)
+			i+=1
+			pass
